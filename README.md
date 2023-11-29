@@ -1,34 +1,19 @@
 # Haskell bit by bit
 
-[![License: CC BY-NC-SA 4.0](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-blue.svg)](http://creativecommons.org/licenses/by-nc-sa/4.0/)
+Live website of [Haskell bit by bit][haskyll].  See the [project page][haskyll]
+for more details.
 
-Live website of [Haskell bit by bit][haskyll].
+## How to merge commits from haskyll
 
-Haskell might seem like a complicated beast at first. It does not have to be
-that way. Let's tackle some basic ideas of the language, bit by bit.
+To sync this repository with [haskyll][haskyll], merge the commits as follows:
 
-<!-- ====================================================================== -->
+```sh
+$ git remote add haskyll https://github.com/quacksouls/haskyll.git
+$ git fetch haskyll --tags
+$ git merge --allow-unrelated-histories haskyll/main
+$ git remote remove haskyll
+```
 
-## Acknowledgement
+You might have to manually resolve merge conflicts.
 
-<!-- prettier-ignore -->
-- We use the Jekyll theme [Coo][coo], which is based on [Chirpy][chirpy].
-
-<!-- ====================================================================== -->
-
-## License
-
-![CC BY-NC-SA 4.0](assets/img/cc.png "CC BY-NC-SA 4.0")
-
-This work is licensed under the terms of the Creative Commons
-Attribution-NonCommercial-ShareAlike 4.0 International ([CC BY-NC-SA 4.0][cc]).
-
-Unless otherwise stated, code in this project is covered by the [MIT][mit]
-license.
-
-<!-- prettier-ignore -->
-[cc]: https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode
-[chirpy]: https://github.com/cotes2020/jekyll-theme-chirpy
-[coo]: https://github.com/quacksouls/jekyll-theme-coo
 [haskyll]: https://github.com/quacksouls/haskyll
-[mit]: https://opensource.org/license/MIT/
