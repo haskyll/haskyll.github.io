@@ -40,8 +40,8 @@ The type `Double` supports the usual arithmetic operators: `+` (addition), `-`
 is performed via the operator `**`. Observe the following GHCi session.
 
 ```haskell
-ghci> a = (7.0 :: Double)
-ghci> b = (2.0 :: Double)
+ghci> a = 7.0 :: Double
+ghci> b = 2.0 :: Double
 ghci> a + b
 9.0
 ghci> a - b
@@ -138,8 +138,8 @@ you want.  For example, the GHCi session below converts various integers to type
 `Double`.
 
 ```haskell
-ghci> a = (3 :: Int)
-ghci> b = (3 :: Integer)
+ghci> a = 3 :: Int
+ghci> b = 3 :: Integer
 ghci> c = (fromIntegral a) :: Double
 ghci> :type c
 c :: Double
@@ -158,17 +158,17 @@ data of type `Integer`.  It would not work on data of type `Int`.  Observe GHCi
 throwing a tantrum.
 
 ```haskell
-ghci> a = (4 :: Int)
-ghci> b = (4 :: Integer)
+ghci> a = 4 :: Int
+ghci> b = 4 :: Integer
 ghci> (fromInteger b) :: Double
 4.0
 ghci> (fromInteger a) :: Double
 
 <interactive>:4:14: error:
-    • Couldn't match expected type ‘Integer’ with actual type ‘Int’
-    • In the first argument of ‘fromInteger’, namely ‘a’
+    * Couldn't match expected type 'Integer' with actual type 'Int'
+    * In the first argument of 'fromInteger', namely 'a'
       In the expression: (fromInteger a) :: Double
-      In an equation for ‘it’: it = (fromInteger a) :: Double
+      In an equation for 'it': it = (fromInteger a) :: Double
 ```
 
 <!--=========================================================================-->
@@ -205,29 +205,42 @@ to an integer, you must take the following issues into account:
 
 ## Exercises
 
-:exercise: Haskell uses the operator `^` for non-negative integer
-exponentiation. The operator `**` is reserved for exponentiation of
-floating-point numbers. There is a third exponentiation operator, i.e. `^^`, for
-numbers of type [`Fractional`][fractional] where the exponent can be a negative
-integer. Why three different operators for exponentiation? Read the [discussion
-here][exponentiation].
+<!-- prettier-ignore-start -->
+:exercise:
+Haskell uses the operator `^` for non-negative integer exponentiation. The
+operator `**` is reserved for exponentiation of floating-point numbers. There is
+a third exponentiation operator, i.e. `^^`, for numbers of type
+[`Fractional`][fractional] where the exponent can be a negative integer. Why
+three different operators for exponentiation? Read the
+[discussion here][exponentiation].
+<!-- prettier-ignore-end -->
 
-:exercise: Write a program that prompts for a person's name and age. The program
-then greets the person and prints their age in 10 years time.
+<!-- prettier-ignore-start -->
+:exercise:
+Write a program that prompts for a person's name and age. The program then
+greets the person and prints their age in 10 years time.
+<!-- prettier-ignore-end -->
 
-:exercise: The gravity of the Moon is 0.166 times that of the gravity of
-Earth. If a person weighs $x$ pounds on Earth, their weight on
-the Moon would be $0.166x$ pounds. Write a program to prompt a person for their
-weight in pounds. Print out the person's weight on the Moon, in pounds as well
-as in kilograms.
+<!-- prettier-ignore-start -->
+:exercise:
+The gravity of the Moon is 0.166 times that of the gravity of Earth. If a person
+weighs $x$ pounds on Earth, their weight on the Moon would be $0.166x$
+pounds. Write a program to prompt a person for their weight in pounds. Print out
+the person's weight on the Moon, in pounds as well as in kilograms.
+<!-- prettier-ignore-end -->
 
-:exercise: The planet Mercury takes about 88 Earth days to complete one orbit
-around the Sun. Given an age in Earth years, write a program to convert the age
-to Mercury years, rounded to the nearest year. Assume that each year on Earth
-has 365 days.
+<!-- prettier-ignore-start -->
+:exercise:
+The planet Mercury takes about 88 Earth days to complete one orbit around the
+Sun. Given an age in Earth years, write a program to convert the age to Mercury
+years, rounded to the nearest year. Assume that each year on Earth has 365
+days.
+<!-- prettier-ignore-end -->
 
-:exercise: The [golden ratio][goldenRatio] is the mathematical constant defined
-by
+<!-- prettier-ignore-start -->
+:exercise:
+The [golden ratio][goldenRatio] is the mathematical constant defined by
+<!-- prettier-ignore-end -->
 
 $$
 \varphi
@@ -242,9 +255,12 @@ $$
 Write a program to print the golden ratio as a floating-point number. Use the
 method [`sqrt`][sqrt] to calculate the square root of a number.
 
-:exercise: The [Planck constant][planckConstant] is a fundamental physical
-constant used in the definition of the kilogram, among other applications. The
-constant is defined as
+<!-- prettier-ignore-start -->
+:exercise:
+The [Planck constant][planckConstant] is a fundamental physical constant used in
+the definition of the kilogram, among other applications. The constant is
+defined as
+<!-- prettier-ignore-end -->
 
 $$
 6.62607015 \times 10^{-34} \; \text{J} \cdot \text{Hz}^{-1}
@@ -253,20 +269,29 @@ $$
 in terms of the unit "joule per hertz". Express the Planck constant, excluding
 the unit of measurement, via the e notation.
 
-:exercise: The method [`div`][div] can be defined in terms of the operator `/`
-for floating-point division and the method [`floor`][floor]. First, perform
+<!-- prettier-ignore-start -->
+:exercise:
+The method [`div`][div] can be defined in terms of the operator `/` for
+floating-point division and the method [`floor`][floor]. First, perform
 floating-point division, then take the floor of the result. Similarly, the
 method [`quot`][quot] can be defined in terms of `/` and the method
 [`truncate`][truncate].[^b] Perform floating-point division and apply `truncate`
 to the result. Verify the above within a GHCi session.
+<!-- prettier-ignore-end -->
 
-:exercise: Why are the numbers `42e-5` and `-42e5` different from each other?
+<!-- prettier-ignore-start -->
+:exercise:
+Why are the numbers `42e-5` and `-42e5` different from each other?
+<!-- prettier-ignore-end -->
 
-:exercise: The method [`mod`][mod] calculates the integer remainder when an
-integer is divided by another integer. The Haskell definition of `mod`
-implements the definition of remainder as popularized by Donald Knuth.[^c] If
-$a$ and $n$ are integers with $n \neq 0$, the remainder $r_f$ of the division
-$a / n$ is defined as
+<!-- prettier-ignore-start -->
+:exercise:
+The method [`mod`][mod] calculates the integer remainder when an integer is
+divided by another integer. The Haskell definition of `mod` implements the
+definition of remainder as popularized by Donald Knuth.[^c] If $a$ and $n$ are
+integers with $n \neq 0$, the remainder $r_f$ of the division $a / n$ is defined
+as
+<!-- prettier-ignore-end -->
 
 $$
 r_f
@@ -299,15 +324,18 @@ $$
 Verify the result of `mod` against the definition of $r_f$ for the following
 types of integers.
 
-- Positive and positive.
-- Positive and negative.
-- Negative and positive.
-- Negative and negative.
+-   Positive and positive.
+-   Positive and negative.
+-   Negative and positive.
+-   Negative and negative.
 
 Repeat the exercise for `rem` and $r_t$.
 
-:exercise: A pyramid has a square base of length $\ell$. If the pyramid has
-height $h$, then the pyramid has a volume $V$ of
+<!-- prettier-ignore-start -->
+:exercise:
+A pyramid has a square base of length $\ell$. If the pyramid has height $h$,
+then the pyramid has a volume $V$ of
+<!-- prettier-ignore-end -->
 
 $$
 V
@@ -323,15 +351,17 @@ pyramid originally had a height of 146.6 metres.
 
 <!--=========================================================================-->
 
-[^a]: The sin of overconsumption is gluttony. Pie is an exception because
+[^a]:
+    The sin of overconsumption is gluttony. Pie is an exception because
     $\sin(\pi) = 0$.
 
-[^b]: These definitions of `div` and `quot` are consistent with the
-    specification as given in the document
-    [Haskell 2010: Language Report][haskell2010].
+[^b]:
+    These definitions of `div` and `quot` are consistent with the specification
+    as given in the document [Haskell 2010 Language Report][haskell2010].
 
-[^c]: Donald E. Knuth. *The Art of Computer Programming*, 3rd edition,
-    volume 1. Addison Wesley Longman, 1997, pp.39--40.
+[^c]:
+    Donald E. Knuth. _The Art of Computer Programming_, 3rd edition, volume 1.
+    Addison Wesley Longman, 1997, pp.39--40.
 
 <!--=========================================================================-->
 

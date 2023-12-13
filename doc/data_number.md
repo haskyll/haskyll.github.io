@@ -63,8 +63,8 @@ possibility of integer overflow. The following GHCi session demonstrates the
 issue.
 
 ```haskell
-ghci> k = (minBound :: Int)
-ghci> n = (maxBound :: Int)
+ghci> k = minBound :: Int
+ghci> n = maxBound :: Int
 ghci> :type k
 k :: Int
 ghci> :type n
@@ -91,8 +91,8 @@ The above GHCi session also shows that [`Int`][int] supports integer addition
 and subtraction. What about integer multiplication?
 
 ```haskell
-ghci> a = (4 :: Int)
-ghci> b = (2 :: Int)
+ghci> a = 4 :: Int
+ghci> b = 2 :: Int
 ghci> c = a * b
 ghci> :type c
 c :: Int
@@ -104,14 +104,14 @@ So far so good. What about integer division? We know that $4 / 2 = 2$. Let's use
 Haskell to confirm our result.
 
 ```haskell
-ghci> a = (4 :: Int)
-ghci> b = (2 :: Int)
+ghci> a = 4 :: Int
+ghci> b = 2 :: Int
 ghci> a / b
 
 <interactive>:3:3: error:
-    • No instance for (Fractional Int) arising from a use of ‘/’
-    • In the expression: a / b
-      In an equation for ‘it’: it = a / b
+    * No instance for (Fractional Int) arising from a use of '/'
+    * In the expression: a / b
+      In an equation for 'it': it = a / b
 ```
 
 What is going on here? The type `Int` does not support integer division? In
@@ -136,9 +136,9 @@ intention is to obtain the quotient when dividing one integer by another
 integer. Observe the following GHCi session.
 
 ```haskell
-ghci> a = (5 :: Int)
-ghci> b = (4 :: Int)
-ghci> c = (2 :: Int)
+ghci> a = 5 :: Int
+ghci> b = 4 :: Int
+ghci> c = 2 :: Int
 ghci> div a c
 2
 ghci> div b c
@@ -216,8 +216,8 @@ second argument. We have seen infix notation already in the section
 session to refresh your memory.
 
 ```haskell
-ghci> a = (6 :: Int)
-ghci> b = (2 :: Int)
+ghci> a = 6 :: Int
+ghci> b = 2 :: Int
 ghci> a + b
 8
 ghci> a - b
@@ -236,8 +236,8 @@ function name. The method [`quot`][quot] can also be used via infix notation
 like so:
 
 ```haskell
-ghci> a = (6 :: Int)
-ghci> b = (4 :: Int)
+ghci> a = 6 :: Int
+ghci> b = 4 :: Int
 ghci> quot a b
 1
 ghci> a `quot` b
@@ -250,8 +250,8 @@ used via infix notation, how can we use it via prefix notation? We surround the
 operator with parentheses, as shown in the next GHCi session.
 
 ```haskell
-ghci> a = (7 :: Int)
-ghci> b = (3 :: Int)
+ghci> a = 7 :: Int
+ghci> b = 3 :: Int
 ghci> a + b
 10
 ghci> (+) a b
@@ -285,8 +285,8 @@ ghci> minBound :: Int
 -9223372036854775808
 ghci> maxBound :: Int
 9223372036854775807
-ghci> k = (-9223372036854775808 :: Integer)
-ghci> n = (9223372036854775807 :: Integer)
+ghci> k = -9223372036854775808 :: Integer
+ghci> n = 9223372036854775807 :: Integer
 ghci> k - n
 -18446744073709551615
 ghci> k * n
@@ -370,7 +370,7 @@ ghci> 3 * -2
 
 <interactive>:1:1: error:
     Precedence parsing error
-        cannot mix ‘*’ [infixl 7] and prefix `-' [infixl 6] in the same infix expression
+        cannot mix '*' [infixl 7] and prefix `-' [infixl 6] in the same infix expression
 ```
 
 However, the expression $-2 \times 3$ produces the correct result.
@@ -386,8 +386,8 @@ where we discussed backticks as a way to use a method or function in infix
 notation. Recall that integer division can be written as:
 
 ```haskell
-ghci> a = (8 :: Integer)
-ghci> b = (3 :: Integer)
+ghci> a = 8 :: Integer
+ghci> b = 3 :: Integer
 ghci> div a b -- prefix notation
 2
 ghci> a `div` b -- infix notation
@@ -463,28 +463,45 @@ shows a few new concepts.  Let's tackle each idea in turn:
 
 ## Exercises
 
-:exercise: Load GHCi and type in [`minBound`][minBound] (or
-[`maxBound`][maxBound]) at the prompt. What does GHCi show? Why do you think
-GHCi shows such output?
+<!-- prettier-ignore-start -->
+:exercise:
+Load GHCi and type in [`minBound`][minBound] (or [`maxBound`][maxBound]) at the
+prompt. What does GHCi show? Why do you think GHCi shows such output?
+<!-- prettier-ignore-end -->
 
-:exercise: Determine the exact range of [`Int`][int] on your computer. An
-integer represented by the type [`Int`][int] has a minimum and maximum values of
-at least $-2^{29}$ and $2^{29} - 1$, respectively. Use Haskell to obtain the
-actual digits in each of the latter two numbers.
+<!-- prettier-ignore-start -->
+:exercise:
+Determine the exact range of [`Int`][int] on your computer. An integer
+represented by the type [`Int`][int] has a minimum and maximum values of at
+least $-2^{29}$ and $2^{29} - 1$, respectively. Use Haskell to obtain the actual
+digits in each of the latter two numbers.
+<!-- prettier-ignore-end -->
 
-:exercise: The GHCi command [`:type`][type] shows the type information of an
-expression. A similar command is [`:info`][info]. Read up on the latter command.
+<!-- prettier-ignore-start -->
+:exercise:
+The GHCi command [`:type`][type] shows the type information of an expression. A
+similar command is [`:info`][info]. Read up on the latter command.
+<!-- prettier-ignore-end -->
 
-:exercise: Use [`:type`][type] to show the signature of the method
-[`quot`][quot]. Explain what the signature of `quot` means.
+<!-- prettier-ignore-start -->
+:exercise:
+Use [`:type`][type] to show the signature of the method [`quot`][quot]. Explain
+what the signature of `quot` means.
+<!-- prettier-ignore-end -->
 
-:exercise: Enter the code `minBound :: Integer` at the prompt of GHCi. What does
-GHCi say? Why do you get that result? Repeat the exercise for the code
+<!-- prettier-ignore-start -->
+:exercise:
+Enter the code `minBound :: Integer` at the prompt of GHCi. What does GHCi say?
+Why do you get that result? Repeat the exercise for the code
 `maxBound :: Integer`.
+<!-- prettier-ignore-end -->
 
-:exercise: The methods [`div`][div] and [`quot`][quot] both perform integer
-division, but their results can be different. Use each method to perform integer
-division with the following types of integers:
+<!-- prettier-ignore-start -->
+:exercise:
+The methods [`div`][div] and [`quot`][quot] both perform integer division, but
+their results can be different. Use each method to perform integer division with
+the following types of integers:
+<!-- prettier-ignore-end -->
 
 1. Positive and positive.
 1. Positive and negative.
@@ -493,24 +510,34 @@ division with the following types of integers:
 1. Zero and positive (or negative).
 1. Positive (or negative) and zero.
 
-:exercise: The method [`mod`][mod] returns the integer remainder when one
-integer is divided by another integer. How many whole weeks are there in three
-years? How many left over days that do not make up a whole week? Use GHCi to
-perform your calculation.
+<!-- prettier-ignore-start -->
+:exercise:
+The method [`mod`][mod] returns the integer remainder when one integer is
+divided by another integer. How many whole weeks are there in three years? How
+many left over days that do not make up a whole week? Use GHCi to perform your
+calculation.
+<!-- prettier-ignore-end -->
 
 <!-- prettier-ignore-start -->
-:exercise: Rewrite the program
+:exercise:
+Rewrite the program
 :script: file="assets/src/data/age.hs", name="age.hs"
 without using string concatenation.
 <!-- prettier-ignore-end -->
 
-:exercise: Write a program to print your name, age, and special talent. Each
-piece of information should be on a separate line.
+<!-- prettier-ignore-start -->
+:exercise:
+Write a program to print your name, age, and special talent. Each piece of
+information should be on a separate line.
+<!-- prettier-ignore-end -->
 
-:exercise: We had a cursory discussion of [syntactic sugar](#syntactic-sugar) in
-this section. [This page][sugarList] has a list of syntactic sugar in Haskell.
-For in-depth discussion, see [this page][sugarBrief], [this][sugarTips], or
+<!-- prettier-ignore-start -->
+:exercise:
+We had a cursory discussion of [syntactic sugar](#syntactic-sugar) in this
+section. [This page][sugarList] has a list of syntactic sugar in Haskell. For
+in-depth discussion, see [this page][sugarBrief], [this][sugarTips], or
 [here][sugarCons].
+<!-- prettier-ignore-end -->
 
 <!--=========================================================================-->
 
