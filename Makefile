@@ -30,22 +30,44 @@ build: clean pretty
 # Remove various junk files.
 clean:
 	rm -rf *~
+	rm -rf assets/src/data/*~
+	rm -rf assets/src/data/solution/*~
+	rm -rf assets/src/decide/*~
+	rm -rf assets/src/decide/solution/*~
+	rm -rf assets/src/hello/*~
+	rm -rf assets/src/recurse/*~
+	rm -rf assets/src/recurse/solution/*~
+	rm -rf doc/*~
 	rm -rf _posts/
 	rm -rf _site/
 	rm -rf _tabs/
 	rm -rf util/*~
+	rm -rf util/ext/*~
+	rm -rf util/lint/*~
 
-# Lint and auto-format Ruby files.
-lintrb:
-	util/rubocop.sh
+# Lint and auto-format C files.
+lintc:
+	util/lint/c.sh
 
 # Lint and auto-format Haskell files.
 linths:
-	util/linths.sh
+	util/lint/haskell.sh
+
+# Lint and auto-format JavaScript files.
+lintjs:
+	npm run jslint
+
+# Lint and auto-format Python files.
+lintpy:
+	util/lint/python.sh
+
+# Lint and auto-format Ruby files.
+lintrb:
+	util/lint/ruby.sh
 
 # Lint shell scripts.
 lintsh:
-	util/shellcheck.sh
+	util/lint/shell.sh
 
 # Run Prettier over Markdown files.
 pretty:
@@ -56,4 +78,4 @@ view: clean pretty
 	util/process.sh
 	bundle exec jekyll serve
 
-.PHONY: build clean lintrb linths lintsh pretty view
+.PHONY: build clean lintc linths lintjs lintpy lintrb lintsh pretty view

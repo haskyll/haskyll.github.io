@@ -82,7 +82,7 @@ function takes an integer as input and outputs the same integer, but with the
 sign flipped. The integer 2 would become $-2$ and $-42$ would become 42. See
 below for the signature of our function together with its definition.
 
-:include: file="assets/src/decide/negate.hs", name="negate.hs"
+:include: file="assets/src/decide/negate.hs", name="negate.hs", line=27:29
 
 I can hear you protest, "But the Haskell library already has its own function to
 reverse the sign of a number. It's the function [`negate`][negate]." OK. Let's
@@ -91,7 +91,7 @@ string to uppercase. This is different from the library function
 [`toUpper`][toUpper] in that our function has a string as input and outputs a
 string. It's true, honest. Have a look.
 
-:include: file="assets/src/decide/upper.hs", name="upper.hs"
+:include: file="assets/src/decide/upper.hs", name="upper.hs", line=25:30
 
 <!--=========================================================================-->
 
@@ -103,7 +103,57 @@ first and last characters of the string. The result is then reversed and we
 capitalize the resulting string. How would we do that? Do it like how we have
 been defining the function `main`, i.e. use the keyword `do`.
 
-:include: file="assets/src/decide/chop.hs", name="chop.hs"
+:include: file="assets/src/decide/chop.hs", name="chop.hs", line=25:37
+
+<!--=========================================================================-->
+
+### Function composition
+
+Hang on. Carefully examine the function `chopSuey` again. What does the dot
+symbol `.` mean? In Haskell, the dot symbol `.` allows us to compose two
+functions. In mathematics, the [composition][composition] of two functions $f$
+and $g$ is written as $f \circ g$, meaning that we apply the function $g$ first
+and feed the output of $g$ to the function $f$. Given a variable $x$, the
+function composition $(f \circ g)(x)$ is equivalent to the nested function
+application $f\big( g(x) \big)$.
+
+In Haskell, the dot notation allows us to compose two Haskell functions. The
+expression `init . tail` means that we first apply the function `tail`, then
+input the result to the function `init`. The expression
+`capitalize . reverse $ torso str` shows the interaction between the function
+application `$` and the function composition `.` notations. Both of these
+notations work from right to left. The function application notation `$` tells
+us to first calculate the result of the expression `torso str`. By definition,
+`torso` is the function composition `init . tail`. The output of `torso str` is
+the output of the function composition `init . tail` given the parameter `str`.
+The result of `torso str` is then fed to the function composition
+`capitalize . reverse`. Using a chain of function compositions, the function
+`chopSuey` can be simplified as follows:
+
+:include: file="assets/src/decide/chop.hs", name="chop.hs", line=39:41
+
+You might have noticed that the function application and composition notations
+work from right to left and are identical in every respect, except for their
+respective symbols. Why not consistently use `$` instead of peppering `$` with
+`.`? For example, we can simplify `chopSuey` as follows:
+
+:include: file="assets/src/decide/chop.hs", name="chop.hs", line=43:45
+
+Why prefer `chopSueyB` over `chopSueyC`? It boils down to various factors:
+
+1. Style. If you do not want to chop and change `$` with `.`, by all means stick
+   with `$` only. If you think in terms of function composition, in the
+   mathematical sense, the notation `.` clarifies your intent.
+1. Noise. The symbol `$` adds more visual noise than `.` does. Compare the
+   definitions of `chopSueyB` and `chopSueyC`. The issue bears similarity to
+   using `$` to reduce the amount of parentheses in an expression.
+1. Lazy. The function application notation `$` expects an immediate result. The
+   expression `tail $ str` would immediately evaluate to the tail of the given
+   string. On the other hand, the function composition notation `.` is lazy in
+   the sense that it would delay evaluation until necessary. The expression
+   `let torso = init . tail` is valid and compiles, whereas the expression
+   `let torso = init $ tail` would result in an error because we have not given
+   an argument to `tail`.
 
 <!--=========================================================================-->
 
@@ -116,7 +166,7 @@ each takes two parameters, so does the string function [`splitAt`][splitAt].
 Let's implement our own function to calculate the maximum of two integers.
 Consider the code below.
 
-:include: file="assets/src/decide/max.hs", name="max.hs"
+:include: file="assets/src/decide/max.hs", name="max.hs", line=27:32
 
 You might have noticed several issues regarding the above definition of the
 function `maxInt`. First, why are there two right arrow symbols `->` in the
@@ -339,6 +389,7 @@ both middle characters. You might find the method [`length`][length] useful.
 
 <!-- prettier-ignore-start -->
 [compare]: https://web.archive.org/web/20231128114053/https://hackage.haskell.org/package/base-4.19.0.0/docs/Prelude.html#v:compare
+[composition]: https://web.archive.org/web/20231219010454/https://en.wikipedia.org/wiki/Function_composition
 [dataChar]: https://web.archive.org/web/20231202081418/https://hackage.haskell.org/package/base-4.19.0.0/docs/Data-Char.html
 [div]: https://web.archive.org/web/20231202002935/https://hackage.haskell.org/package/base-4.19.0.0/docs/Prelude.html#v:div
 [fst]: https://web.archive.org/web/20231202002935/https://hackage.haskell.org/package/base-4.19.0.0/docs/Prelude.html#v:fst

@@ -1,5 +1,3 @@
-#!/usr/bin/env bash
-
 ################################################################################
 ## MIT License
 ##
@@ -24,8 +22,9 @@
 ## SOFTWARE.
 ################################################################################
 
-# Lint shell scripts.
+# Print all integers from 1 to 10, inclusive.
+for i in range(1, 11):
+    print(i)
 
-for i in util/*.sh; do
-    shellcheck "$i"
-done
+# Here's a one-liner.
+_ = [print(i) for i in range(1, 11)]

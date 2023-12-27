@@ -22,39 +22,32 @@
 ## SOFTWARE.
 ################################################################################
 
-# Extract an exercise label.
+# Create a link to a YouTube video.
 #
-# @param line A line of text containing the exercise format.
-# @return The label of the exercise.  The empty string if the exercise does not
-#     contain a label.
-def extract_label(line)
-    return "" unless label?(line)
-
-    return line.gsub(/:exercise:/, "").gsub(/label=/, "").strip
+# @param id The ID of a YouTube video.
+# @param title The title of the video.
+# @returns A link to the video with the given ID.
+def create_link(id, title)
+    yt = "http://www.youtube.com/watch?v"
+    img = "http://img.youtube.com/vi"
+    link_fmt = 'target="_blank" rel="noopener"'
+    header = format('<a href="%s=%s" %s>%s</a>', yt, id, link_fmt, title)
+    image = format('<a href="%s=%s" title="%s" %s>', yt, id, title, link_fmt)
+    image += format('<img src="%s/%s/0.jpg" alt="%s"></a>', img, id, title)
+    return format("%s<br/>\n%s\n", header, image)
 end
 
-# Whether an exercise has a label.  A label is typically used for
-# cross-referencing.
-#
-# @param line A line of text containing the exercise format.
-# @return True if the exercise has a label; false otherwise.
-def label?(line)
-    return line.include?("label=")
-end
-
-# Number the exercises in a section/chapter.  Each exercise follows this
+# Process links to YouTube videos.  The link to a YouTube video follows this
 # format:
 #
-# :exercise:
-# Insert text of the exercise.
+# yt_id="abc"
+# yt_title="xyz"
 #
-# The text ":exercise:" delimits the beginning of an exercise and should be on
-# its own line.  You can label an exercise in order to cross-reference it
-# within the same document or from a different document.  Labelling an exercise
-# is optional.  Label an exercise according to this format:
+# Replace "abc" with the video ID and replace "xyz" with the title of the
+# video.  For example:
 #
-# :exercise: label="my_label"
-# Insert text of the exercise.
+# yt_id="p3G5IXn0K7A"
+# yt_title="The Hamsterdance Song"
 #
 # This script expects the following command line argument:
 #
@@ -62,23 +55,36 @@ end
 #     the directory "_tabs/".
 def main
     doc = ARGV[0]
-    ex_delim = ":exercise:"
-    n = 1
+    id_delim = "yt_id"
+    title_delim = "yt_title"
+    has_id = false
+    has_title = false
+    id = ""
+    title = ""
     content = ""
     File.foreach(doc) do |line|
-        if line.strip.start_with?(ex_delim)
-            label = extract_label(line)
-            prefix = label?(line) ? format("<strong id=%s>", label) : "<strong>"
-            content += format("%sExercise %d.</strong> ", prefix, n)
-            n += 1
-        else
-            content += line
+        if line.strip.start_with?(id_delim)
+            id = line.strip.split("=")[-1]
+            id = id.scan(/^"(\S+)"$/).last[-1]
+            has_id = true
+            next
         end
+        if line.strip.start_with?(title_delim)
+            title = line.strip.split("=")[-1]
+            title = title.split(/^"/)[-1]
+            title = title.split(/"$/)[-1]
+            has_title = true
+        end
+        if has_id && has_title
+            content += create_link(id, title)
+            has_id = false
+            has_title = false
+            next
+        end
+        content += line if !has_id && !has_title
     end
     # Overwrite the existing content of the file.
-    File.open(doc, "w") do |f|
-        f.write(content)
-    end
+    File.write(doc, content)
 end
 
 ################################################################################

@@ -5,7 +5,7 @@ math: true
 
 The basic idea of pattern matching is simple. Organize the definition of your
 function according to the specific patterns you want to match. That does not
-sound simple at all. We need an example.
+sound simple at all. We need examples to clarify how to use pattern matching.
 
 <!--=========================================================================-->
 
@@ -15,11 +15,11 @@ Put on your traffic engineer hat. The traffic light red means stop, orange means
 wait, and green means go. We can translate the latter description to a guarded
 equation like so:
 
-:include: file="assets/src/decide/traffic.hs", name="traffic.hs", line=3:9
+:include: file="assets/src/decide/traffic.hs", name="traffic.hs", line=27:33
 
 Alternatively, we can use pattern matching. How? Observe:
 
-:include: file="assets/src/decide/traffic.hs", name="traffic.hs", line=11:16
+:include: file="assets/src/decide/traffic.hs", name="traffic.hs", line=35:40
 
 Each equation above has a specific pattern (i.e. a literal value) we want to
 match. For instance, in the equation
@@ -50,7 +50,7 @@ boolean value. The negation of `True` is `False`, the negation of `False` is
 `True`. We have all the specific cases we need to implement our own negation
 function. Here's the code:
 
-:include: file="assets/src/decide/not.hs", name="not.hs", line=3:6
+:include: file="assets/src/decide/not.hs", name="not.hs", line=27:30
 
 How about the boolean operator `||`? The section [Or](../data_bool/#or) has a
 table that defines all the results of `||` for any pair of boolean input. For
@@ -74,7 +74,7 @@ then the result is `True` regardless of whether the second operand is `True` or
 `False`. We write a pattern for each case where the first operand is `False`.
 The third (and last) case has the wildcard pattern. See below for the code:
 
-:include: file="assets/src/decide/or.hs", name="or.hs", line=3:7
+:include: file="assets/src/decide/or.hs", name="or.hs", line=27:31
 
 <!--=========================================================================-->
 
@@ -98,7 +98,7 @@ Note that `fst` ignores the second element. That seems like a job for the
 wildcard symbol `_`. Let's implement our own version of `fst` and name it
 `firstA`.
 
-:include: file="assets/src/decide/first.hs", name="first.hs", line=3:5
+:include: file="assets/src/decide/first.hs", name="first.hs", line=27:29
 
 There's something funny going on in the signature of `firstA`. Where's the type
 name like `Integer` or `String`? Instead, the input is a tuple like `(a, b)`.
@@ -114,7 +114,7 @@ greater than two elements. Consider a tuple of three elements such as
 `(1, 2, 3)`. The middle element is `2`. Here's a function to extract the middle
 element of any tuple of three elements:
 
-:include: file="assets/src/decide/mid.hs", name="mid.hs", line=3:5
+:include: file="assets/src/decide/mid.hs", name="mid.hs", line=27:29
 
 <!--=========================================================================-->
 
@@ -124,11 +124,11 @@ Did you say you want more examples? No problem. Consider the addition of vectors
 of two elements. Adding two vectors is the same as adding their corresponding
 elements. Here's an implementation:
 
-:include: file="assets/src/decide/vadd.hs", name="vadd.hs", line=3:5
+:include: file="assets/src/decide/vadd.hs", name="vadd.hs", line=27:29
 
-What is the code `(Num a) =>` doing in the signature of `vadd`? What does the
-code mean? Let's examine the code bit by bit. The Haskell type [`Num`][num] is a
-type class, meaning that `Num` encompasses the usual number types such as `Int`,
+What is the code `Num a =>` doing in the signature of `vadd`? What does the code
+mean? Let's examine the code bit by bit. The Haskell type [`Num`][num] is a type
+class, meaning that `Num` encompasses the usual number types such as `Int`,
 `Integer`, and `Double`. Put another way, numeric types such as `Integer` and
 `Double` are based on `Num`. You can confirm the latter statement by examining
 the following GHCi session:
@@ -182,7 +182,7 @@ require much effort to define our own version that works for lists of two
 elements. With a little change to the function `firstA` we can define the
 counterpart of `fst` for lists. See the following:
 
-:include: file="assets/src/decide/first.hs", name="first.hs", line=7:9
+:include: file="assets/src/decide/first.hs", name="first.hs", line=31:33
 
 Here are some differences between the functions `firstA` and `firstB`.
 
@@ -206,7 +206,7 @@ is that you can use a powerful technique to perform pattern matching. This is
 best demonstrated via an example. We can reimplement the function `firstB` as
 follows:
 
-:include: file="assets/src/decide/first.hs", name="first.hs", line=11:13
+:include: file="assets/src/decide/first.hs", name="first.hs", line=35:37
 
 Why do we have the tuple `(x:xs)` in the above code listing? The code `(x:xs)`
 is not specifying a tuple. Rather, it tells us that given a list, we assign the
@@ -232,7 +232,7 @@ ghci> firstC []
 
 We must handle the case of the empty list. No problem. Here's version 2.0:
 
-:include: file="assets/src/decide/first.hs", name="first.hs", line=15:18
+:include: file="assets/src/decide/first.hs", name="first.hs", line=39:42
 
 In the above code listing, we used the function [`error`][error] to halt the
 program and output a sensible message if the function `firstD` is given an empty
@@ -259,7 +259,7 @@ Let's see more of the this-and-rest pattern `(x:xs)` in action. We have a
 function to extract the first element of a list. Logic dictates that we should
 have a function to extract the second element. Here goes:
 
-:include: file="assets/src/decide/second.hs", name="second.hs", line=3:7
+:include: file="assets/src/decide/second.hs", name="second.hs", line=27:31
 
 The pattern `(x:y:xs)` in the above code listing has the following
 interpretation. The first element of a list is assigned to the variable `x`, the
@@ -268,7 +268,7 @@ to `xs`. However, we are only interested in the second element. We donut, umm...
 I mean, do not care about the `x` and the `xs`. Sounds like another job for the
 wildcard symbol `_`. Here is a different version of `secondA`.
 
-:include: file="assets/src/decide/second.hs", name="second.hs", line=9:13
+:include: file="assets/src/decide/second.hs", name="second.hs", line=33:37
 
 <!--=========================================================================-->
 
@@ -305,7 +305,7 @@ elements of the vectors are integers. You might find the type class
 <!-- prettier-ignore-end -->
 
 <!-- prettier-ignore-start -->
-:exercise:
+:exercise: label="exDotProduct"
 The dot product of two vectors $(a,\, b)$ and $(x,\, y)$ is defined as
 <!-- prettier-ignore-end -->
 
@@ -319,24 +319,43 @@ Implement the dot product.
 
 <!-- prettier-ignore-start -->
 :exercise:
-Implement your own version of the function [`last`][last].
+Consider the function `capitalize` from the sections
+[DIY](../decide_function/#diy) and [I `do`](../decide_function/#i-do). Simplify
+the function.
 <!-- prettier-ignore-end -->
 
 <!-- prettier-ignore-start -->
 :exercise:
-Implementation your own version of the function [`tail`][tail].
+The functions [`head`][head], [`tail`][tail], [`init`][init], and [`last`][last]
+are unsafe in the sense that each would throw an error when given an empty
+list.
 <!-- prettier-ignore-end -->
 
-<!-- prettier-ignore-start -->
-:exercise:
-Implement your own version of the function [`init`][init].
-<!-- prettier-ignore-end -->
+1. Implement your own versions of the functions [`last`][last], [`tail`][tail],
+   and [`init`][init] without using the above functions.
+1. Implement your own versions of the above functions so they would properly
+   handle empty lists.
+1. The torso of a list is defined as the list without its head and last
+   elements. Use your "safe" implementations above to obtain the torso of
+   various lists.
 
 <!-- prettier-ignore-start -->
 :exercise:
 Write a function that takes a list of integers. If the first integer is odd,
 then remove the first element. Otherwise keep the integer.
 <!-- prettier-ignore-end -->
+
+<!-- prettier-ignore-start -->
+:exercise:
+The [Cartesian product][cartesianProduct] of two lists `[a, b, c]` and
+`[x, y, z]` is the list:
+<!-- prettier-ignore-end -->
+
+```haskell
+[(a, x), (a, y), (a, z), (b, x), (b, y), (b, z), (c, x), (c, y), (c, z)]
+```
+
+Write a function to implement the Cartesian product of lists of three elements.
 
 <!--=========================================================================-->
 
@@ -345,6 +364,7 @@ then remove the first element. Otherwise keep the integer.
 <!--=========================================================================-->
 
 <!-- prettier-ignore-start -->
+[cartesianProduct]: https://web.archive.org/web/20231213134027/https://en.wikipedia.org/wiki/Cartesian_product
 [dataBits]: https://web.archive.org/web/20231116111136/https://hackage.haskell.org/package/base-4.19.0.0/docs/Data-Bits.html
 [error]: https://web.archive.org/web/20231202002935/https://hackage.haskell.org/package/base-4.19.0.0/docs/Prelude.html#v:error
 [fst]: https://web.archive.org/web/20231202002935/https://hackage.haskell.org/package/base-4.19.0.0/docs/Prelude.html#v:fst

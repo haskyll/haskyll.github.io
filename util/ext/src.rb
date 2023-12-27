@@ -123,11 +123,17 @@ end
 # @param file Path to a source file.
 # @returns The programming language of the source code.
 def infer_language(file)
+    lang = {
+        "c" => "c",
+        "hs" => "haskell",
+        "js" => "js",
+        "py" => "py"
+    }
     ext = file.split("/")[-1]
     ext = ext.split(".")[-1]
-    return unless ext == "hs"
+    return unless lang.key?(ext)
 
-    return "haskell"
+    return lang[ext]
 end
 
 # Process various script-related directives.  The supported directives are:
@@ -135,7 +141,7 @@ end
 # (1) Include within a section or chapter a source file that has programming
 #     code.  The inclusion follows this format:
 #
-#     :include: file="/path/to/source/file.extension", name="short name", start=k, end=n
+#     :include: file="/path/to/source/file.extension", name="short name", line=a:b
 # (2) Link to a source file.  The linking follows this format:
 #
 #     :script: file="/path/to/source/file.extension", name="a short name"
@@ -160,9 +166,7 @@ def main
         end
     end
     # Overwrite the existing content of the file.
-    File.open(doc, "w") do |f|
-        f.write(content)
-    end
+    File.write(doc, content)
 end
 
 ################################################################################

@@ -81,9 +81,9 @@ The Haskell REPL, i.e. GHCi, is suitable for quick experimentation. Sooner or
 later you would want to store Haskell code in a text file. Create a text file
 called `hello.hs` and save the following code in the file:
 
-:include: file="assets/src/hello/hello.hs", name="hello.hs"
+:include: file="assets/src/hello/hello.hs", name="hello.hs", line=25:-
 
-Ignore the code segment `main = `. We will discuss that later on in the section
+Ignore the code segment `main = `. We will discuss that in the section
 [The function `main`](#the-function-main).
 
 Now use GHC to compile your source file to machine code. The compiler is called
@@ -134,7 +134,7 @@ languages that offer a REPL environment.[^b]
 Recall the "Hello, world" program from the section
 [Tales from the script](#tales-from-the-script), reproduced below:
 
-:include: file="assets/src/hello/hello.hs", name="hello.hs"
+:include: file="assets/src/hello/hello.hs", name="hello.hs", line=25:-
 
 The program creates a function called `main`. The body of the function is the
 line:
@@ -203,6 +203,12 @@ run the file
 .
 <!-- prettier-ignore-end -->
 
+<!-- prettier-ignore-start -->
+:exercise:
+You can try out Haskell in your browser by running an
+[interactive tutorial][tryHaskell].
+<!-- prettier-ignore-end -->
+
 <!--========================================================================-->
 
 [^a]: Tradition is peer pressure from dead (and living) people.
@@ -231,4 +237,5 @@ run the file
 [putStrLn]: https://web.archive.org/web/20231202002935/https://hackage.haskell.org/package/base-4.19.0.0/docs/Prelude.html#v:putStrLn
 [python]: https://www.python.org
 [runghc]: https://web.archive.org/web/20231202215621/https://downloads.haskell.org/ghc/latest/docs/users_guide/runghc.html
+[tryHaskell]: https://www.tryhaskell.org
 <!-- prettier-ignore-end -->

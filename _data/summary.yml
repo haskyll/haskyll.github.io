@@ -1,3 +1,9 @@
+# Uncomment the next configuration line to get GitHub Pages to correctly
+# generate the book and host under the URL:
+#
+# https://quacksouls.github.io/haskyll/
+# prefix: "/haskyll"
+
 toc:
 
 - title: Hello, world
@@ -35,3 +41,14 @@ toc:
       url: /decide_guard/
     - title: Pattern matching
       url: /decide_pattern/
+- title: Recursion, or how I loop
+  url: /recurse_README/
+  subfolder:
+    - title: Some examples
+      url: /recurse_example/
+    - title: No loop for you
+      url: /recurse_loopless/
+    - title: Fold under pressure
+      url: /recurse_fold/
+    - title: Recursion by numbers
+      url: /recurse_advice/
