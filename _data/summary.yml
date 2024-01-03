@@ -52,3 +52,12 @@ toc:
       url: /recurse_fold/
     - title: Recursion by numbers
       url: /recurse_advice/
+- title: Listless in Seattle
+  url: /list_README/
+  subfolder:
+  - title: Free range numbers
+    url: /list_range/
+  - title: ¿Comprende?
+    url: /list_comprehension/
+  - title: Bool-like
+    url: /list_boolike/

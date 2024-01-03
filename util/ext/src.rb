@@ -22,13 +22,15 @@
 ## SOFTWARE.
 ################################################################################
 
+require "yaml"
+
 # Link to a source file.
 #
 # @param dir A shortened directive, without the ":include:" or ":script:"
 #     annotations.
+# @param github URL to source tree on GitHub.
 # @returns A link to a source file as contained in the shortened directive.
-def create_link(dir)
-    github = "https://github.com/quacksouls/haskyll/blob/main"
+def create_link(dir, github)
     file, name, = get_field_values(dir)
     return format("[`%s`](%s/%s)\n", name, github, file)
 end
@@ -73,22 +75,20 @@ end
 
 # Extract the field values.  The inclusion follows this format:
 #
-# :include: file="/path/to/source/file.extension", name="short name", line=a:b
+# :include: file="/path/to/source/file.extension", line=a:b
 #
 # The field values are therefore:
 #
-# (1) /path/to/source/file.extension
-# (2) short name
-# (3) a:b
+# (1) (required) /path/to/source/file.extension
+# (2) (optional) a:b
 #
 # @param dir A shortened directive, without the ":include:" or ":script:"
 #     annotations.
-# @returns An array containing only the file name and short name, without
-#     annotations.
+# @returns An array containing the file name, short name, and line numbers.
 def get_field_values(dir)
-    file, name, line = dir.split(",").map{ |str| str.strip }
+    file, line = dir.split(",").map{ |str| str.strip }
     file = file.scan(/^file="(\S+)"$/).last[-1]
-    name = name.scan(/^name="(\S+)"$/).last[-1]
+    name = file.split("/")[-1]
     line = if line.nil?
                "-:-"
            else
@@ -106,12 +106,13 @@ end
 # extension of the included file will be used to infer syntax highlighting.
 #
 # @param line A line that specifies the inclusion format.
+# @param github URL to source tree on GitHub.
 # @returns A string containing the source code to include in our document.
-def include_src(line)
+def include_src(line, github)
     content = ""
     new_line = line.gsub(/:include:/, "").strip
     file, _, line = get_field_values(new_line)
-    content += create_link(new_line)
+    content += create_link(new_line, github)
     content += format("```%s\n", infer_language(file))
     content += get_content(file, line)
     content += "```\n"
@@ -126,6 +127,7 @@ def infer_language(file)
     lang = {
         "c" => "c",
         "hs" => "haskell",
+        "html" => "html",
         "js" => "js",
         "py" => "py"
     }
@@ -155,12 +157,14 @@ def main
     in_delim = ":include:"
     sc_delim = ":script:"
     content = ""
+    config = YAML.load_file("_config.yml")
+    github = config["github"]["src"]
     File.foreach(doc) do |line|
         if line.strip.start_with?(in_delim)
-            content += include_src(line)
+            content += include_src(line, github)
         elsif line.strip.start_with?(sc_delim)
             new_line = line.gsub(/:script:/, "").strip
-            content += create_link(new_line)
+            content += create_link(new_line, github)
         else
             content += line
         end
