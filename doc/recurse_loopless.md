@@ -183,6 +183,10 @@ ghci> map (\x -> x + 1) [1 .. 10]
 [2,3,4,5,6,7,8,9,10,11]
 ```
 
+<!--=========================================================================-->
+
+### Some examples
+
 Bella manages a boutique. In preparation for an upcoming sale, Bella asks Sam to
 help her update the following prices:
 
@@ -216,6 +220,24 @@ And concatenating some strings:
 ghci> map (\(s, t) -> s ++ t) [("pre", "view"), ("re", "do"), ("anti", "c")]
 ["preview","redo","antic"]
 ```
+
+<!--=========================================================================-->
+
+### DIY map
+
+We have everything we need to create our own implementation of the function
+[`map`][map]. Let's call our implementation `imap`, whose parameters are:
+
+1. A function `f` that accepts one parameter.
+1. A list $\ell$ of values.
+
+The function `f` is applied to each element of $\ell$, one at a time. The
+results of all function applications are output as a list. Here's the code:
+
+:include: file="assets/src/recurse/map.hs", line=28:31
+
+The simple definition of `imap` belies its usefulness as a technique of
+recursion.
 
 <!--=========================================================================-->
 
